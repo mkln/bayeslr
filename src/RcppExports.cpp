@@ -11,55 +11,42 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
-// rcpparma_hello_world
-arma::mat rcpparma_hello_world();
-RcppExport SEXP _bayeslr_rcpparma_hello_world() {
+// full_cond_sigmasq
+double full_cond_sigmasq(double a, double b, const arma::mat& X, const arma::vec& y, const arma::vec& beta);
+RcppExport SEXP _bayeslr_full_cond_sigmasq(SEXP aSEXP, SEXP bSEXP, SEXP XSEXP, SEXP ySEXP, SEXP betaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    rcpp_result_gen = Rcpp::wrap(rcpparma_hello_world());
+    Rcpp::traits::input_parameter< double >::type a(aSEXP);
+    Rcpp::traits::input_parameter< double >::type b(bSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type y(ySEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type beta(betaSEXP);
+    rcpp_result_gen = Rcpp::wrap(full_cond_sigmasq(a, b, X, y, beta));
     return rcpp_result_gen;
 END_RCPP
 }
-// rcpparma_outerproduct
-arma::mat rcpparma_outerproduct(const arma::colvec& x);
-RcppExport SEXP _bayeslr_rcpparma_outerproduct(SEXP xSEXP) {
+// gibbs_sampler
+Rcpp::List gibbs_sampler(const arma::vec& y, const arma::mat& X, const arma::vec& m, const arma::mat& M, double a, double b, int N);
+RcppExport SEXP _bayeslr_gibbs_sampler(SEXP ySEXP, SEXP XSEXP, SEXP mSEXP, SEXP MSEXP, SEXP aSEXP, SEXP bSEXP, SEXP NSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::colvec& >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpparma_outerproduct(x));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpparma_innerproduct
-double rcpparma_innerproduct(const arma::colvec& x);
-RcppExport SEXP _bayeslr_rcpparma_innerproduct(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::colvec& >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpparma_innerproduct(x));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpparma_bothproducts
-Rcpp::List rcpparma_bothproducts(const arma::colvec& x);
-RcppExport SEXP _bayeslr_rcpparma_bothproducts(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::colvec& >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpparma_bothproducts(x));
+    Rcpp::traits::input_parameter< const arma::vec& >::type y(ySEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type m(mSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type M(MSEXP);
+    Rcpp::traits::input_parameter< double >::type a(aSEXP);
+    Rcpp::traits::input_parameter< double >::type b(bSEXP);
+    Rcpp::traits::input_parameter< int >::type N(NSEXP);
+    rcpp_result_gen = Rcpp::wrap(gibbs_sampler(y, X, m, M, a, b, N));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_bayeslr_rcpparma_hello_world", (DL_FUNC) &_bayeslr_rcpparma_hello_world, 0},
-    {"_bayeslr_rcpparma_outerproduct", (DL_FUNC) &_bayeslr_rcpparma_outerproduct, 1},
-    {"_bayeslr_rcpparma_innerproduct", (DL_FUNC) &_bayeslr_rcpparma_innerproduct, 1},
-    {"_bayeslr_rcpparma_bothproducts", (DL_FUNC) &_bayeslr_rcpparma_bothproducts, 1},
+    {"_bayeslr_full_cond_sigmasq", (DL_FUNC) &_bayeslr_full_cond_sigmasq, 5},
+    {"_bayeslr_gibbs_sampler", (DL_FUNC) &_bayeslr_gibbs_sampler, 7},
     {NULL, NULL, 0}
 };
 
